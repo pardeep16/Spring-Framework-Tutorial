@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+     
+     <bean id="person" class="com.thecodereveal.core.models.Person">
+     
+     </bean> 
+     
+     <bean id="myBankAccount" class="com.thecodereveal.core.di.MyBankAccount">
+     	<constructor-arg ref="currentAccount"/>
+     	<constructor-arg ref="account"/>
+     </bean> 
+     
+     <bean id="currentAccount" class="com.thecodereveal.core.di.CurrentAccount">
+     	
+     </bean>
+     
+     <bean id="savingAccount" class="com.thecodereveal.core.di.SavingAccount">
+     
+     </bean>
+     
+      <bean id="account" class="com.thecodereveal.core.models.Account">
+      
+      	<property name="accountId" value="1012112" />
+      	<property name="accountHolder" value="Some User" />
+     
+     </bean>
+     
+     <bean id="employeeService" class="com.thecodereveal.core.autowiring.EmployeeService" autowire="constructor">
+     	<constructor-arg type="String" value="Pardeep"></constructor-arg>
+     </bean>
+     
+     <bean id="projectService" class="com.thecodereveal.core.autowiring.Project" autowire="no">
+     
+     	<property name="projectId" value="1012"></property>
+     	<property name="projectName" value="Retail Shopping Website"></property>
+     	
+     </bean> 
+     
+     <context:annotation-config/>
+     <context:component-scan base-package="com.thecodereveal.core.annotation"></context:component-scan>
+     
+        
+</beans>
