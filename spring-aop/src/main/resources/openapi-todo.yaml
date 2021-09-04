@@ -1,0 +1,168 @@
+openapi: 3.0.2
+info:
+  title: To-Do REST API
+  version: 0.0.1
+  description: REST APIS for Todo App
+  contact:
+    email: dev-support@thecodereveal.com
+    name: Development Team
+servers:
+  - url: 'http://localhost:8080'
+    variables: {}
+    description: localhost
+tags:
+  - name: Tasks
+paths:
+  /task:
+    summary: Rest Operations for Task API
+    post:
+      summary: Create new task
+      description: ''
+      operationId: createTask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        '201':
+          description: New Task created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorize
+      tags:
+        - Tasks
+        
+    get:
+      summary: Get All Tasks
+      description: ''
+      operationId: getAllTasks
+      responses:
+        '200':
+          description: New Task created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorize
+      tags:
+        - Tasks
+  /task/{id}:
+    description: Task Operations
+    get:
+      tags: 
+      - Tasks
+      description: Get Tasks
+      operationId: getTasks
+      summary: Get Task
+      parameters: 
+      - name: id
+        schema:
+          type: integer
+        in: path
+        required: true
+        description: Task Id
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Task'
+    
+    put:
+      tags: 
+      - Tasks
+      description: Update Task
+      operationId: updateTask
+      summary: Update Task
+      parameters: 
+      - name: id
+        schema:
+          type: integer
+        in: path
+        required: true
+        description: Task Id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Task'
+    
+    delete:
+      tags: 
+      - Tasks
+      description: Delete Task
+      operationId: deleteTask
+      summary: Delete Task
+      parameters: 
+      - name: id
+        schema:
+          type: integer
+        in: path
+        required: true
+        description: Task Id
+      responses:
+        '200':
+          description: Success
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Task'
+            
+    
+components:
+  schemas:
+    Task:
+      description: Task Object
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+          description: Task Title
+        description:
+          type: string
+          description: Task description
+        startDate:
+          type: string
+        endDate:
+          type: string
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+    TaskStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - DELETED
+        - COMPLETED
