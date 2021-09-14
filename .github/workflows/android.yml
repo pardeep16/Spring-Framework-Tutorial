@@ -1,0 +1,46 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Spring Unit-Testing
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      job_name:
+        description: 'Build Application'
+        required: true
+        default: 'build_Job'
+    
+defaults:
+  run:
+    working-directory: spring-unit-testing
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build_Job:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: spring-unit-testing
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Install and Build 🔧
+        run:
+          mvn clean install
+      - name: Upload Code Coverage
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
