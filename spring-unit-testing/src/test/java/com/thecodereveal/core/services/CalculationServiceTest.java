@@ -1,6 +1,7 @@
 package com.thecodereveal.core.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class CalculationServiceTest extends SpringUnitTest {
 	
 	@Test
 	public void testAddNumbers2() {
-		assertEquals(10, calculationService.addNumbers(2, 2));
+		assertNotEquals(10, calculationService.addNumbers(2, 2));
+	}
+	
+	@Test
+	public void testMax() {
+		assertEquals(5, calculationService.findMax(5, 4));
 	}
 }
